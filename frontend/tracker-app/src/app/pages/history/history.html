@@ -1,0 +1,24 @@
+<div class="container mt-4" style="max-width: 800px;">
+  <h2 class="mb-4 text-primary">Історія тренувань</h2>
+
+  <div class="card shadow-sm">
+    <ul class="list-group list-group-flush">
+      <!-- Читаємо дані з сигналу: workouts() -->
+      <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let workout of workouts()">
+        <span>
+          <strong>{{ workout.workout_type }}</strong>
+          <span class="text-muted ms-2">{{ workout.duration }} хв</span>
+        </span>
+        <div>
+          <span class="badge bg-success rounded-pill me-3">{{ workout.distance }} км</span>
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteWorkout(workout.id)">❌</button>
+        </div>
+      </li>
+      
+      <!-- Читаємо дані з сигналу: workouts() -->
+      <li class="list-group-item text-center text-muted py-4" *ngIf="workouts().length === 0">
+        Ви ще не додали жодного тренування.
+      </li>
+    </ul>
+  </div>
+</div>
