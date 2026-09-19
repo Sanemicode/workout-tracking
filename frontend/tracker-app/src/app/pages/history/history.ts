@@ -1,33 +1,42 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WorkoutService } from '../../services/workout';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-history',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './history.html',
+  styleUrl: './history.css'
 })
 export class History implements OnInit {
-  // 1. Створюємо Сигнал замість звичайного масиву
-  workouts = signal<any[]>([]);
+  private http = inject(HttpClient);
+  // 1. Підключаємо сервіс оновлення екрану
+  private cdr = inject(ChangeDetectorRef);
 
-  constructor(private workoutService: WorkoutService) {}
+  workouts: any[] = [];
+  totalDistance: number = 0;
+  totalDuration: number = 0;
 
   ngOnInit() {
-    this.loadWorkouts();
+    this.loadHistory();
   }
 
-  loadWorkouts() {
-    this.workoutService.getWorkouts().subscribe(data => {
-      // 2. Записуємо отримані дані всередину Сигналу через метод .set()
-      this.workouts.set(data as any[]);
+  loadHistory() {
+    this.http.get<any[]>('http://localhost:8000/api/workouts').subscribe({
+      next: (data) => {
+        this.workouts = data;
+        this.calculateStats();
+        
+        // 2. Смикаємо Angular: "Дані прийшли, перемалюй таблицю і статистику негайно!"
+        this.cdr.detectChanges(); 
+      },
+      error: (err) => console.error('Помилка завантаження історії:', err)
     });
   }
 
-  deleteWorkout(id: number) {
-    this.workoutService.deleteWorkout(id).subscribe(() => {
-      this.loadWorkouts(); 
-    });
+  calculateStats() {
+    this.totalDistance = this.workouts.reduce((sum, w) => sum + w.distance, 0);
+    this.totalDuration = this.workouts.reduce((sum, w) => sum + w.duration, 0);
   }
 }

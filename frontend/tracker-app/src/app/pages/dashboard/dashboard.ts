@@ -1,65 +1,79 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // 1. Додали ChangeDetectorRef
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BaseChartDirective } from 'ng2-charts';
-import { WorkoutService } from '../../services/workout';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, BaseChartDirective],
+  imports: [CommonModule, FormsModule],
   templateUrl: './dashboard.html',
+  styleUrl: './dashboard.css'
 })
 export class Dashboard implements OnInit {
+  private http = inject(HttpClient);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
+
   workouts: any[] = [];
-  newWorkout = { workout_type: '', duration: null, distance: null };
-
-  public pieChartLabels: string[] = [];
-  public pieChartDatasets = [{ data: [] as number[] }];
-  public pieChartOptions = { responsive: true };
-
-  constructor(
-    private workoutService: WorkoutService,
-    private cdr: ChangeDetectorRef // 2. Зареєстрували детектор змін
-  ) {}
+  
+  // Змінні для форми
+  workoutType = 'Біг';
+  duration: number | null = null;
+  distance: number | null = null;
 
   ngOnInit() {
     this.loadWorkouts();
   }
 
   loadWorkouts() {
-    this.workoutService.getWorkouts().subscribe(data => {
-      this.workouts = data as any[];
-      this.updateChart();
-      
-      this.cdr.detectChanges(); // 3. ПРИМУСОВО кажемо Angular оновити екран прямо зараз!
-    });
-  }
+  this.http.get<any>('http://localhost:8000/api/workouts').subscribe({
+    next: (data) => {
+      console.log('Дашборд отримав дані:', data); // Дивимось, що реально прийшло
+      this.workouts = data; 
+      this.cdr.detectChanges();
+    },
+    error: (err) => console.error('Помилка завантаження дашборду:', err)
+  });
+}
 
   addWorkout() {
-    if (!this.newWorkout.workout_type) return;
-    this.workoutService.addWorkout(this.newWorkout).subscribe(() => {
-      this.loadWorkouts();
-      this.newWorkout = { workout_type: '', duration: null, distance: null };
+    if (!this.workoutType || !this.duration || !this.distance) return;
+
+    // FastAPI очікує дані як query-параметри
+    const url = `http://localhost:8000/api/workouts?workout_type=${this.workoutType}&duration=${this.duration}&distance=${this.distance}`;
+    
+    this.http.post(url, {}).subscribe({
+      next: (newWorkout) => {
+        this.workouts.push(newWorkout); // Одразу додаємо в список на екрані
+        // Очищаємо форму
+        this.duration = null;
+        this.distance = null;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Помилка додавання:', err)
     });
   }
 
   deleteWorkout(id: number) {
-    this.workoutService.deleteWorkout(id).subscribe(() => {
-      this.loadWorkouts();
+    if (!confirm('Точно видалити це тренування?')) return;
+
+    this.http.delete(`http://localhost:8000/api/workouts/${id}`).subscribe({
+      next: () => {
+        // Видаляємо картку з масиву на екрані
+        this.workouts = this.workouts.filter(w => w.id !== id);
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Помилка видалення:', err)
     });
   }
 
-  updateChart() {
-    const stats: any = {};
-    this.workouts.forEach(w => {
-      if (stats[w.workout_type]) {
-        stats[w.workout_type] += w.duration;
-      } else {
-        stats[w.workout_type] = w.duration;
-      }
-    });
-    this.pieChartLabels = Object.keys(stats);
-    this.pieChartDatasets = [{ data: Object.values(stats) }];
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

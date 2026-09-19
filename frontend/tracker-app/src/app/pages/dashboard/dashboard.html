@@ -1,37 +1,33 @@
-<div class="container mt-4" style="max-width: 800px;">
-  <h2 class="mb-4 text-primary">Мій Дашборд</h2>
-
-  <div class="card shadow-sm mb-4" *ngIf="workouts.length > 0">
-    <div class="card-body">
-      <h5 class="card-title text-center text-secondary mb-3">Витрачений час (хвилини)</h5>
-      <div style="display: block; max-width: 350px; margin: 0 auto;">
-        <canvas baseChart
-          [type]="'pie'"
-          [datasets]="pieChartDatasets"
-          [labels]="pieChartLabels"
-          [options]="pieChartOptions">
-        </canvas>
+<div class="dashboard-container">
+  <section class="add-section">
+    <h3>Додати активність</h3>
+    <form (ngSubmit)="addWorkout()">
+      <div class="input-row">
+        <input type="text" [(ngModel)]="workoutType" name="type" placeholder="Вид (напр. Біг)" required>
+        <input type="number" [(ngModel)]="duration" name="duration" placeholder="Час (хв)" required>
+        <input type="number" [(ngModel)]="distance" name="distance" placeholder="Дистанція (км)" required>
+        <button type="submit" class="add-btn">Додати</button>
       </div>
-    </div>
-  </div>
+    </form>
+  </section>
 
-  <div class="card shadow-sm mb-4 border-primary">
-    <div class="card-body">
-      <h5 class="card-title mb-3">Додати нове тренування</h5>
-      <div class="row g-3 align-items-center">
-        <div class="col-md-4">
-          <input type="text" class="form-control" placeholder="Вид (напр. Велосипед)" [(ngModel)]="newWorkout.workout_type">
+  <section class="list-section">
+    <h3>Історія</h3>
+    <div class="workout-grid">
+      <div class="workout-card" *ngFor="let w of workouts">
+        <div class="card-header">
+          {{ w.workout_type }}
+          <button class="delete-btn" (click)="deleteWorkout(w.id)">✖</button>
         </div>
-        <div class="col-md-3">
-          <input type="number" class="form-control" placeholder="Час (хв)" [(ngModel)]="newWorkout.duration">
-        </div>
-        <div class="col-md-3">
-          <input type="number" class="form-control" placeholder="Відстань (км)" [(ngModel)]="newWorkout.distance">
-        </div>
-        <div class="col-md-2">
-          <button class="btn btn-primary w-100" (click)="addWorkout()">Додати</button>
+        <div class="card-stats">
+          <span>⏱ {{ w.duration }} хв</span>
+          <span>📏 {{ w.distance }} км</span>
         </div>
       </div>
     </div>
-  </div>
+    
+    <div class="empty-state" *ngIf="workouts.length === 0">
+      Ви ще не додали жодного тренування. Час розім'ятися!
+    </div>
+  </section>
 </div>

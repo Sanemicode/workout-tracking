@@ -1,0 +1,56 @@
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth';
+
+@Component({
+  selector: 'app-auth',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './auth.html',
+  styleUrl: './auth.css'
+})
+export class AuthComponent {
+  isLoginMode = true; // За замовчуванням показуємо форму входу
+  email = '';
+  password = '';
+  errorMessage = '';
+
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  toggleMode() {
+    this.isLoginMode = !this.isLoginMode;
+    this.errorMessage = '';
+  }
+
+  onSubmit() {
+    if (!this.email || !this.password) {
+      this.errorMessage = 'Заповніть всі поля';
+      return;
+    }
+
+    const credentials = { email: this.email, password: this.password };
+
+    if (this.isLoginMode) {
+      // Логіка входу
+      this.authService.login(credentials).subscribe({
+        next: () => {
+          this.router.navigate(['/']); // Редирект на головну після успішного входу
+        },
+        error: () => this.errorMessage = 'Неправильний email або пароль'
+      });
+    } else {
+      // Логіка реєстрації
+      this.authService.register(credentials).subscribe({
+        next: () => {
+          this.isLoginMode = true; 
+          this.errorMessage = '';
+          alert('Реєстрація успішна! Тепер увійдіть.');
+        },
+        error: (err) => this.errorMessage = err.error?.detail || 'Помилка реєстрації. Можливо, email вже зайнятий.'
+      });
+    }
+  }
+}

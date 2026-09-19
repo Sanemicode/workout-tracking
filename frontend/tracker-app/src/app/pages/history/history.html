@@ -1,24 +1,42 @@
-<div class="container mt-4" style="max-width: 800px;">
-  <h2 class="mb-4 text-primary">Історія тренувань</h2>
+<div class="history-container">
+  <h2>Історія тренувань</h2>
 
-  <div class="card shadow-sm">
-    <ul class="list-group list-group-flush">
-      <!-- Читаємо дані з сигналу: workouts() -->
-      <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let workout of workouts()">
-        <span>
-          <strong>{{ workout.workout_type }}</strong>
-          <span class="text-muted ms-2">{{ workout.duration }} хв</span>
-        </span>
-        <div>
-          <span class="badge bg-success rounded-pill me-3">{{ workout.distance }} км</span>
-          <button class="btn btn-sm btn-outline-danger" (click)="deleteWorkout(workout.id)">❌</button>
-        </div>
-      </li>
-      
-      <!-- Читаємо дані з сигналу: workouts() -->
-      <li class="list-group-item text-center text-muted py-4" *ngIf="workouts().length === 0">
-        Ви ще не додали жодного тренування.
-      </li>
-    </ul>
+  <!-- Блок статистики показується тільки якщо є тренування -->
+  <div class="stats-row" *ngIf="workouts.length > 0">
+    <div class="stat-card">
+      <h4>Всього тренувань</h4>
+      <p>{{ workouts.length }}</p>
+    </div>
+    <div class="stat-card">
+      <h4>Загальний час</h4>
+      <p>{{ totalDuration }} хв</p>
+    </div>
+    <div class="stat-card">
+      <h4>Загальна дистанція</h4>
+      <p>{{ totalDistance }} км</p>
+    </div>
+  </div>
+
+  <!-- Таблиця з даними -->
+  <table class="history-table" *ngIf="workouts.length > 0">
+    <thead>
+      <tr>
+        <th>Вид активності</th>
+        <th>Час (хв)</th>
+        <th>Дистанція (км)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let w of workouts">
+        <td>{{ w.workout_type }}</td>
+        <td>{{ w.duration }}</td>
+        <td>{{ w.distance }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Повідомлення, якщо масив порожній -->
+  <div class="empty-state" *ngIf="workouts.length === 0">
+    Історія порожня. Додайте своє перше тренування на Дашборді!
   </div>
 </div>

@@ -1,0 +1,76 @@
+.history-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 20px;
+  font-family: sans-serif;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* Стилі для верхніх карток статистики */
+.stats-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.stat-card h4 {
+  margin: 0 0 10px 0;
+  color: #555;
+  font-size: 1rem;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0d6efd;
+}
+
+/* Стилі для таблиці */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.history-table th, .history-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.history-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.history-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.empty-state {
+  text-align: center;
+  color: #777;
+  padding: 40px 0;
+  font-style: italic;
+}

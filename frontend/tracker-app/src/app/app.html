@@ -1,12 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="#">🏃‍♂️ WorkoutTracker</a>
-    <div class="navbar-nav flex-row gap-3">
-      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Дашборд</a>
-      <a class="nav-link" routerLink="/history" routerLinkActive="active">Історія</a>
-    </div>
+<!-- Навігація показується тільки авторизованим користувачам -->
+<nav class="global-nav" *ngIf="authService.isLoggedIn()">
+  <div class="nav-brand">🏃‍♂️ WorkoutTracker</div>
+  
+  <div class="nav-links">
+    <a routerLink="/dashboard" routerLinkActive="active">Дашборд</a>
+    <a routerLink="/history" routerLinkActive="active">Історія</a>
   </div>
+
+  <button class="nav-logout-btn" (click)="logout()">Вийти</button>
 </nav>
 
-<!-- Сюди Angular автоматично підставлятиме вміст Дашборду або Історії -->
-<router-outlet></router-outlet>
+<!-- Сюди Angular буде підставляти Дашборд, Історію або Логін -->
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

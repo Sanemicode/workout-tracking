@@ -1,14 +1,13 @@
-import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+// Виправлено крапку на дефіс у назві файлу
+import { authInterceptor } from './interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZonelessChangeDetection(), // <-- Прибрали слово Experimental
-    provideRouter(routes), 
-    provideHttpClient(withFetch()), 
-    provideCharts(withDefaultRegisterables()) 
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([authInterceptor])) 
   ]
 };
