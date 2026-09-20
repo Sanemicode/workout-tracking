@@ -2,6 +2,7 @@ Workout Tracker
 
 A full-stack web application designed to help users track, analyze, and share their fitness activities, workouts, and personal statistics. Developed as part of an advanced web technologies coursework.
 
+---
 
 Key Features
 
@@ -11,6 +12,8 @@ Advanced History & Filtering**: Comprehensive workout history with sorting by da
 Public Profiles & Custom Links**: Each user gets a unique shareable profile link (e.g., `/u/username`) to showcase their public workout statistics.
 Internationalization (i18n)**: Full interface localization supporting **Ukrainian (UA)** and **English (EN)** via `@ngx-translate/core`.
 Responsive UI**: Clean, modern design optimized for both desktop and mobile devices.
+
+---
 
 Tech Stack
 
@@ -25,6 +28,8 @@ Framework: Python (FastAPI / Flask - *залежно від того, що ви�
 Database: SQLite / PostgreSQL
 Security: PyJWT, Passlib (Password Hashing)
 
+
+---
 
 Getting Started & Installation
 
