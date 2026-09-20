@@ -105,3 +105,30 @@ header {
   font-style: italic;
 }
 
+.cancel-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #0d6efd;
+  font-size: 1.1em;
+  cursor: pointer;
+  padding: 0;
+}
+
+.edit-btn:hover {
+  color: #0b5ed7;
+}

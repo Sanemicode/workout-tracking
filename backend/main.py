@@ -7,6 +7,7 @@ from jose import jwt
 from database import engine, SessionLocal
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import JWTError
+from datetime import datetime, timedelta, date
 import models
 import schemas
 
@@ -62,12 +63,16 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 # Ендпоінт для ДОДАВАННЯ нового тренування (POST)
 @app.post("/api/workouts")
-def create_workout(workout_type: str, duration: int, distance: float, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+def create_workout(workout_type: str, duration: int, distance: float, workout_date: str = None, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    # Якщо дату не передали, ставимо поточну
+    final_date = workout_date if workout_date else date.today().isoformat()
+    
     new_workout = models.Workout(
         workout_type=workout_type, 
         duration=duration, 
         distance=distance,
-        owner_id=current_user.id  # Прив'язуємо тренування до ID користувача
+        date=final_date,
+        owner_id=current_user.id  
     )
     db.add(new_workout)
     db.commit()
@@ -146,20 +151,19 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 
     # Ендпоінт для ОНОВЛЕННЯ тренування (PUT)
 @app.put("/api/workouts/{workout_id}")
-def update_workout(workout_id: int, workout_type: str, duration: int, distance: float, db: Session = Depends(get_db)):
-    # Шукаємо запис у базі
-    workout = db.query(models.Workout).filter(models.Workout.id == workout_id).first()
+def update_workout(workout_id: int, workout_type: str, duration: int, distance: float, workout_date: str = None, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    # Шукаємо запис, який належить саме цьому юзеру
+    workout = db.query(models.Workout).filter(models.Workout.id == workout_id, models.Workout.owner_id == current_user.id).first()
     
     if not workout:
-        return {"error": "Тренування не знайдено"}
+        raise HTTPException(status_code=404, detail="Тренування не знайдено або немає доступу")
     
-    # Оновлюємо поля новими значеннями
     workout.workout_type = workout_type
     workout.duration = duration
     workout.distance = distance
-    
-    # Зберігаємо зміни
+    if workout_date:
+        workout.date = workout_date
+        
     db.commit()
     db.refresh(workout)
-    
     return workout

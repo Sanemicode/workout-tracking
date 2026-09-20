@@ -1,7 +1,6 @@
 <div class="history-container">
   <h2>Історія тренувань</h2>
 
-  <!-- Блок статистики показується тільки якщо є тренування -->
   <div class="stats-row" *ngIf="workouts.length > 0">
     <div class="stat-card">
       <h4>Всього тренувань</h4>
@@ -17,10 +16,10 @@
     </div>
   </div>
 
-  <!-- Таблиця з даними -->
   <table class="history-table" *ngIf="workouts.length > 0">
     <thead>
       <tr>
+        <th>Дата</th>
         <th>Вид активності</th>
         <th>Час (хв)</th>
         <th>Дистанція (км)</th>
@@ -28,6 +27,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let w of workouts">
+        <td>{{ w.date }}</td>
         <td>{{ w.workout_type }}</td>
         <td>{{ w.duration }}</td>
         <td>{{ w.distance }}</td>
@@ -35,7 +35,6 @@
     </tbody>
   </table>
 
-  <!-- Повідомлення, якщо масив порожній -->
   <div class="empty-state" *ngIf="workouts.length === 0">
     Історія порожня. Додайте своє перше тренування на Дашборді!
   </div>

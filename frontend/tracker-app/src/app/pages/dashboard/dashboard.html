@@ -1,12 +1,22 @@
 <div class="dashboard-container">
   <section class="add-section">
-    <h3>Додати активність</h3>
-    <form (ngSubmit)="addWorkout()">
+    <!-- Змінюємо заголовок залежно від того, чи ми редагуємо, чи створюємо -->
+    <h3>{{ editingId ? 'Редагувати активність' : 'Додати активність' }}</h3>
+    
+    <!-- Викликаємо нову функцію submitForm() -->
+    <form (ngSubmit)="submitForm()">
       <div class="input-row">
         <input type="text" [(ngModel)]="workoutType" name="type" placeholder="Вид (напр. Біг)" required>
         <input type="number" [(ngModel)]="duration" name="duration" placeholder="Час (хв)" required>
         <input type="number" [(ngModel)]="distance" name="distance" placeholder="Дистанція (км)" required>
-        <button type="submit" class="add-btn">Додати</button>
+        <!-- Нове поле для вибору дати -->
+        <input type="date" [(ngModel)]="workoutDate" name="date" required>
+        
+        <button type="submit" class="add-btn">
+          {{ editingId ? 'Зберегти' : 'Додати' }}
+        </button>
+        <!-- Кнопка скасування (з'являється тільки при редагуванні) -->
+        <button *ngIf="editingId" type="button" class="cancel-btn" (click)="resetForm()">Скасувати</button>
       </div>
     </form>
   </section>
@@ -17,9 +27,15 @@
       <div class="workout-card" *ngFor="let w of workouts">
         <div class="card-header">
           {{ w.workout_type }}
-          <button class="delete-btn" (click)="deleteWorkout(w.id)">✖</button>
+          <div class="actions">
+            <!-- Додали кнопку редагування з олівцем -->
+            <button class="edit-btn" (click)="startEdit(w)">✎</button>
+            <button class="delete-btn" (click)="deleteWorkout(w.id)">✖</button>
+          </div>
         </div>
         <div class="card-stats">
+          <!-- Додали вивід дати на картку -->
+          <span>📅 {{ w.date }}</span>
           <span>⏱ {{ w.duration }} хв</span>
           <span>📏 {{ w.distance }} км</span>
         </div>
