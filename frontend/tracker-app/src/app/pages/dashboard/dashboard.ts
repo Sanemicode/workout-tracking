@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Імпорти для графіків
 import { BaseChartDirective } from 'ng2-charts';
@@ -15,7 +16,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, BaseChartDirective], // Додали BaseChartDirective сюди
+  imports: [CommonModule, FormsModule, BaseChartDirective, TranslateModule], // Додали BaseChartDirective сюди
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

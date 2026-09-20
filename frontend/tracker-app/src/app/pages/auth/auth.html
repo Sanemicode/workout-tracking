@@ -1,24 +1,25 @@
 <div class="auth-container">
-  <h2>{{ isLoginMode ? 'Вхід' : 'Реєстрація' }}</h2>
+  <h2>{{ isLoginMode ? ('AUTH.LOGIN_TITLE' | translate) : ('AUTH.REGISTER_TITLE' | translate) }}</h2>
   
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label>Email</label>
-      <!-- [(ngModel)] зв'язує поле з нашими змінними в TypeScript -->
+      <label>{{ 'AUTH.EMAIL' | translate }}</label>
       <input type="email" name="email" [(ngModel)]="email" required>
     </div>
 
     <div class="form-group">
-      <label>Пароль</label>
+      <label>{{ 'AUTH.PASSWORD' | translate }}</label>
       <input type="password" name="password" [(ngModel)]="password" required>
     </div>
 
-    <button type="submit">{{ isLoginMode ? 'Увійти' : 'Зареєструватися' }}</button>
+    <button type="submit">
+      {{ isLoginMode ? ('AUTH.BTN_LOGIN' | translate) : ('AUTH.BTN_REGISTER' | translate) }}
+    </button>
   </form>
 
   <p (click)="toggleMode()" class="toggle-text">
-    {{ isLoginMode ? 'Немає акаунту? Зареєструватися' : 'Вже є акаунт? Увійти' }}
+    {{ isLoginMode ? ('AUTH.TOGGLE_TO_REGISTER' | translate) : ('AUTH.TOGGLE_TO_LOGIN' | translate) }}
   </p>
 </div>

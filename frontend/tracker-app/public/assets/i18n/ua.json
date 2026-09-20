@@ -1,0 +1,67 @@
+{
+  "NAV": {
+    "MY_PROFILE": "Мій профіль",
+    "DASHBOARD": "Дашборд",
+    "HISTORY": "Історія",
+    "LOGOUT": "Вийти"
+    
+  },
+  "DASHBOARD": {
+    "EDIT_ACTIVITY": "Редагувати активність",
+    "ADD_ACTIVITY": "Додати активність",
+    "PLACEHOLDER_TYPE": "Вид (напр. Біг)",
+    "PLACEHOLDER_TIME": "Час (хв)",
+    "PLACEHOLDER_DISTANCE": "Дистанція (км)",
+    "BTN_SAVE": "Зберегти",
+    "BTN_ADD": "Додати",
+    "BTN_CANCEL": "Скасувати",
+    "ANALYTICS_TITLE": "Аналітика: Витрачений час (хв)",
+    "HISTORY_TITLE": "Історія",
+    "EMPTY_STATE": "Ви ще не додали жодного тренування. Час розім'ятися!"
+  },
+  "HISTORY_PAGE": {
+    "TITLE": "Історія тренувань",
+    "FILTER_LABEL": "Вид активності:",
+    "SORT_PREFIX": "Сортувати за датою:",
+    "SORT_DESC": "Новіші спочатку ⬇",
+    "SORT_ASC": "Старіші спочатку ⬆",
+    "STATS_TOTAL_WORKOUTS": "Всього тренувань",
+    "STATS_TOTAL_TIME": "Загальний час",
+    "STATS_TOTAL_DISTANCE": "Загальна дистанція",
+    "TABLE_DATE": "Дата",
+    "TABLE_TYPE": "Вид активності",
+    "TABLE_TIME": "Час (хв)",
+    "TABLE_DISTANCE": "Дистанція (км)",
+    "EMPTY_FILTER": "За вашими критеріями тренувань не знайдено.",
+    "EMPTY_HISTORY": "Історія порожня. Додайте своє перше тренування на Дашборді!"
+  },
+  "PUBLIC_PROFILE": {
+    "TITLE": "Сторінка спортсмена:",
+    "SUBTITLE": "Публічна статистика тренувань",
+    "STATS_WORKOUTS": "Тренувань",
+    "STATS_TIME": "Всього часу",
+    "STATS_DISTANCE": "Вся дистанція",
+    "TABLE_DATE": "Дата",
+    "TABLE_TYPE": "Активність",
+    "TABLE_TIME": "Час (хв)",
+    "TABLE_DISTANCE": "Дистанція (км)",
+    "EMPTY_STATE": "Користувач ще не додав жодного тренування.",
+    "LOADING": "Завантаження...",
+    "ERROR_TITLE": "Ой!",
+    "BTN_HOME": "На головну"
+  },
+  "UNITS": {
+    "MIN": "хв",
+    "KM": "км"
+  },
+  "AUTH": {
+    "LOGIN_TITLE": "Вхід",
+    "REGISTER_TITLE": "Реєстрація",
+    "EMAIL": "Email",
+    "PASSWORD": "Пароль",
+    "BTN_LOGIN": "Увійти",
+    "BTN_REGISTER": "Зареєструватися",
+    "TOGGLE_TO_REGISTER": "Немає акаунту? Зареєструватися",
+    "TOGGLE_TO_LOGIN": "Вже є акаунт? Увійти"
+  }
+}

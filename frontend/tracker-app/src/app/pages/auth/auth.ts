@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './auth.html',
   styleUrl: './auth.css'
 })
@@ -36,6 +37,9 @@ export class AuthComponent implements OnInit {
     if (!this.email || !this.password) {
       this.errorMessage = 'Заповніть всі поля';
       return;
+    }
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('username', this.email.split('@')[0]);
     }
 
     const credentials = { email: this.email, password: this.password };

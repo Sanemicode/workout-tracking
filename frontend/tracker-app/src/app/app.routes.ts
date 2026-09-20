@@ -5,7 +5,7 @@ import { History } from './pages/history/history';
 import { AuthComponent } from './pages/auth/auth';
 import { AuthService } from './services/auth';
 import { Landing } from './pages/landing/landing';
-
+import { PublicProfileComponent } from './pages/public-profile/public-profile';
 const authGuard = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -23,6 +23,8 @@ export const routes: Routes = [
   // Відкритий маршрут
   { path: 'login', component: AuthComponent },
   
+  { path: 'u/:username', component: PublicProfileComponent }, // Динамічний маршрут для публічного профілю
+
   // Захищені маршрути (додано canActivate)
   { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
   { path: 'history', component: History, canActivate: [authGuard] },

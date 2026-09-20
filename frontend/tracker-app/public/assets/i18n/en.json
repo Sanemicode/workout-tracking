@@ -1,0 +1,66 @@
+{
+  "NAV": {
+    "MY_PROFILE": "My Profile",
+    "DASHBOARD": "Dashboard",
+    "HISTORY": "History",
+    "LOGOUT": "Logout"
+  },
+  "DASHBOARD": {
+    "EDIT_ACTIVITY": "Edit Activity",
+    "ADD_ACTIVITY": "Add Activity",
+    "PLACEHOLDER_TYPE": "Type (e.g. Run)",
+    "PLACEHOLDER_TIME": "Time (min)",
+    "PLACEHOLDER_DISTANCE": "Distance (km)",
+    "BTN_SAVE": "Save",
+    "BTN_ADD": "Add",
+    "BTN_CANCEL": "Cancel",
+    "ANALYTICS_TITLE": "Analytics: Time spent (min)",
+    "HISTORY_TITLE": "History",
+    "EMPTY_STATE": "You haven't added any workouts yet. Time to warm up!"
+  },
+  "HISTORY_PAGE": {
+  "TITLE": "Workout History",
+  "FILTER_LABEL": "Activity type:",
+  "SORT_PREFIX": "Sort by date:",
+  "SORT_DESC": "Newest first ⬇",
+  "SORT_ASC": "Oldest first ⬆",
+  "STATS_TOTAL_WORKOUTS": "Total Workouts",
+  "STATS_TOTAL_TIME": "Total Time",
+  "STATS_TOTAL_DISTANCE": "Total Distance",
+  "TABLE_DATE": "Date",
+  "TABLE_TYPE": "Activity",
+  "TABLE_TIME": "Time (min)",
+  "TABLE_DISTANCE": "Distance (km)",
+  "EMPTY_FILTER": "No workouts found matching your criteria.",
+  "EMPTY_HISTORY": "History is empty. Add your first workout on the Dashboard!"
+},
+"PUBLIC_PROFILE": {
+    "TITLE": "Athlete Page:",
+    "SUBTITLE": "Public Workout Statistics",
+    "STATS_WORKOUTS": "Workouts",
+    "STATS_TIME": "Total Time",
+    "STATS_DISTANCE": "Total Distance",
+    "TABLE_DATE": "Date",
+    "TABLE_TYPE": "Activity",
+    "TABLE_TIME": "Time (min)",
+    "TABLE_DISTANCE": "Distance (km)",
+    "EMPTY_STATE": "This user hasn't added any workouts yet.",
+    "LOADING": "Loading...",
+    "ERROR_TITLE": "Oops!",
+    "BTN_HOME": "Go to Homepage"
+  },
+  "UNITS": {
+    "MIN": "min",
+    "KM": "km"
+  },
+  "AUTH": {
+    "LOGIN_TITLE": "Login",
+    "REGISTER_TITLE": "Sign Up",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "BTN_LOGIN": "Sign In",
+    "BTN_REGISTER": "Create Account",
+    "TOGGLE_TO_REGISTER": "Don't have an account? Sign up",
+    "TOGGLE_TO_LOGIN": "Already have an account? Sign in"
+  }
+}

@@ -1,0 +1,53 @@
+<div class="public-container">
+  
+  <div *ngIf="isLoading" class="loading">{{ 'PUBLIC_PROFILE.LOADING' | translate }}</div>
+  
+  <div *ngIf="error" class="error-state">
+    <h2>{{ 'PUBLIC_PROFILE.ERROR_TITLE' | translate }}</h2>
+    <p>{{ error }}</p>
+    <a routerLink="/" class="btn primary">{{ 'PUBLIC_PROFILE.BTN_HOME' | translate }}</a>
+  </div>
+
+  <div *ngIf="!isLoading && !error" class="profile-content">
+    <div class="profile-header">
+      <h2>{{ 'PUBLIC_PROFILE.TITLE' | translate }} <span>@{{ username }}</span></h2>
+      <p>{{ 'PUBLIC_PROFILE.SUBTITLE' | translate }}</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <h4>{{ 'PUBLIC_PROFILE.STATS_TIME' | translate }}</h4>
+        <!-- Змінюємо жорстке "хв" на пайп -->
+        <p>{{ totalDuration }} {{ 'UNITS.MIN' | translate }}</p>
+      </div>
+      <div class="stat-card">
+        <h4>{{ 'PUBLIC_PROFILE.STATS_DISTANCE' | translate }}</h4>
+        <!-- Змінюємо жорстке "км" на пайп -->
+        <p>{{ totalDistance }} {{ 'UNITS.KM' | translate }}</p>
+      </div>
+    </div>
+
+    <table class="history-table" *ngIf="workouts.length > 0">
+      <thead>
+        <tr>
+          <th>{{ 'PUBLIC_PROFILE.TABLE_DATE' | translate }}</th>
+          <th>{{ 'PUBLIC_PROFILE.TABLE_TYPE' | translate }}</th>
+          <th>{{ 'PUBLIC_PROFILE.TABLE_TIME' | translate }}</th>
+          <th>{{ 'PUBLIC_PROFILE.TABLE_DISTANCE' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let w of workouts">
+          <td>{{ w.date }}</td>
+          <td>{{ w.workout_type }}</td>
+          <td>{{ w.duration }}</td>
+          <td>{{ w.distance }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="empty-state" *ngIf="workouts.length === 0">
+      {{ 'PUBLIC_PROFILE.EMPTY_STATE' | translate }}
+    </div>
+  </div>
+</div>
