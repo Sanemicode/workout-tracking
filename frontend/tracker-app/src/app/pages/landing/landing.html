@@ -1,0 +1,28 @@
+<div class="landing-container">
+  <section class="hero">
+    <h1>Твій персональний WorkoutTracker 🏃‍♂️</h1>
+    <p>Відстежуй свої тренування, аналізуй статистику та досягай нових вершин. Жодних складних таблиць — лише твій прогрес.</p>
+    <div class="cta-buttons">
+      <!-- Показуємо, якщо НЕ залогінений -->
+      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="btn primary">Почати тренування</a>
+      
+      <!-- Показуємо, якщо залогінений -->
+      <a *ngIf="authService.isLoggedIn()" routerLink="/dashboard" class="btn primary">Перейти до Дашборду</a>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature-card">
+      <h3>📊 Детальний Дашборд</h3>
+      <p>Отримуй зведену статистику своїх досягнень.</p>
+    </div>
+    <div class="feature-card">
+      <h3>📅 Історія в розрізах</h3>
+      <p>Переглядай активність по датах та видах спорту.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🔒 Безпека даних</h3>
+      <p>Твої результати надійно захищені та приватні.</p>
+    </div>
+  </section>
+</div>

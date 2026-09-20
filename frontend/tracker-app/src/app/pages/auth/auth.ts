@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth';
   templateUrl: './auth.html',
   styleUrl: './auth.css'
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {
   isLoginMode = true; // За замовчуванням показуємо форму входу
   email = '';
   password = '';
@@ -19,6 +19,13 @@ export class AuthComponent {
 
   private authService = inject(AuthService);
   private router = inject(Router);
+
+  // Додали перевірку при завантаженні сторінки
+  ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -37,7 +44,7 @@ export class AuthComponent {
       // Логіка входу
       this.authService.login(credentials).subscribe({
         next: () => {
-          this.router.navigate(['/']); // Редирект на головну після успішного входу
+          this.router.navigate(['/dashboard']); // Редирект на дашборд після успішного входу
         },
         error: () => this.errorMessage = 'Неправильний email або пароль'
       });

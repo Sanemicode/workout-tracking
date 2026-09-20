@@ -20,7 +20,19 @@
       </div>
     </form>
   </section>
-
+<!-- НОВА СЕКЦІЯ ДЛЯ ГРАФІКІВ -->
+  <section class="charts-section" *ngIf="workouts.length > 0">
+    <h3>Аналітика: Витрачений час (хв)</h3>
+    <div class="chart-wrapper">
+      <canvas baseChart
+        [type]="'doughnut'"
+        [datasets]="chartData"
+        [labels]="chartLabels"
+        [options]="chartOptions">
+      </canvas>
+    </div>
+  </section>
+  
   <section class="list-section">
     <h3>Історія</h3>
     <div class="workout-grid">

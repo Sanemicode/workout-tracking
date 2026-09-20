@@ -5,10 +5,17 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
 
+// Імпорти для графіків
+import { BaseChartDirective } from 'ng2-charts';
+import { Chart, registerables } from 'chart.js';
+
+// Обов'язкова реєстрація компонентів Chart.js
+Chart.register(...registerables);
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BaseChartDirective], // Додали BaseChartDirective сюди
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -28,6 +35,22 @@ export class Dashboard implements OnInit {
 
   editingId: number | null = null;
 
+  // --- Змінні для Графіка (Кругова діаграма) ---
+  public chartLabels: string[] = [];
+  public chartData: any[] = [
+    { 
+      data: [], 
+      backgroundColor: ['#0d6efd', '#20c997', '#ffc107', '#fd7e14', '#d63384', '#6f42c1'] 
+    }
+  ];
+  public chartOptions: any = { 
+    responsive: true, 
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom' }
+    }
+  };
+
   ngOnInit() {
     this.loadWorkouts();
   }
@@ -35,20 +58,18 @@ export class Dashboard implements OnInit {
   loadWorkouts() {
     this.http.get<any>('http://localhost:8000/api/workouts').subscribe({
       next: (data) => {
-        console.log('Дашборд отримав дані:', data);
         this.workouts = data; 
+        this.updateCharts(); // Оновлюємо графік
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Помилка завантаження дашборду:', err)
+      error: (err) => console.error('Помилка завантаження:', err)
     });
   }
 
-  // Цей метод тепер вміє і створювати нове, і оновлювати старе
   submitForm() {
     if (!this.workoutType || !this.duration || !this.distance || !this.workoutDate) return;
 
     if (this.editingId) {
-      // Режим РЕДАГУВАННЯ
       const url = `http://localhost:8000/api/workouts/${this.editingId}?workout_type=${this.workoutType}&duration=${this.duration}&distance=${this.distance}&workout_date=${this.workoutDate}`;
       
       this.http.put(url, {}).subscribe({
@@ -58,38 +79,33 @@ export class Dashboard implements OnInit {
             this.workouts[index] = updatedWorkout;
           }
           this.resetForm();
+          this.updateCharts(); // Оновлюємо графік
           this.cdr.detectChanges();
-        },
-        error: (err) => console.error('Помилка оновлення:', err)
+        }
       });
     } else {
-      // Режим СТВОРЕННЯ
       const url = `http://localhost:8000/api/workouts?workout_type=${this.workoutType}&duration=${this.duration}&distance=${this.distance}&workout_date=${this.workoutDate}`;
       
       this.http.post(url, {}).subscribe({
         next: (newWorkout) => {
           this.workouts.push(newWorkout); 
           this.resetForm();
+          this.updateCharts(); // Оновлюємо графік
           this.cdr.detectChanges(); 
-        },
-        error: (err) => console.error('Помилка додавання:', err)
+        }
       });
     }
   }
 
-  // Метод, який перекидає дані з картки у форму для редагування
   startEdit(workout: any) {
     this.editingId = workout.id;
     this.workoutType = workout.workout_type;
     this.duration = workout.duration;
     this.distance = workout.distance;
     this.workoutDate = workout.date || new Date().toISOString().split('T')[0];
-    
-    // Плавно скролимо екран догори до форми
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Метод для очищення форми
   resetForm() {
     this.editingId = null;
     this.duration = null;
@@ -103,10 +119,27 @@ export class Dashboard implements OnInit {
     this.http.delete(`http://localhost:8000/api/workouts/${id}`).subscribe({
       next: () => {
         this.workouts = this.workouts.filter(w => w.id !== id);
+        this.updateCharts(); // Оновлюємо графік
         this.cdr.detectChanges();
-      },
-      error: (err) => console.error('Помилка видалення:', err)
+      }
     });
+  }
+
+  // --- Функція перерахунку даних для графіка ---
+  updateCharts() {
+    const typeMap = new Map<string, number>();
+    
+    // Групуємо час за видами тренувань
+    this.workouts.forEach(w => {
+      const current = typeMap.get(w.workout_type) || 0;
+      typeMap.set(w.workout_type, current + Number(w.duration));
+    });
+
+    this.chartLabels = Array.from(typeMap.keys());
+    this.chartData[0].data = Array.from(typeMap.values());
+    
+    // Створюємо новий об'єкт масиву, щоб Angular точно помітив зміни і перемалював Canvas
+    this.chartData = [...this.chartData]; 
   }
 
   logout() {

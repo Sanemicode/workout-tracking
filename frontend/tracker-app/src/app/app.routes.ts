@@ -4,6 +4,7 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { History } from './pages/history/history';
 import { AuthComponent } from './pages/auth/auth';
 import { AuthService } from './services/auth';
+import { Landing } from './pages/landing/landing';
 
 const authGuard = () => {
   const authService = inject(AuthService);
@@ -18,6 +19,7 @@ const authGuard = () => {
 };
 
 export const routes: Routes = [
+  { path: '', component: Landing },
   // Відкритий маршрут
   { path: 'login', component: AuthComponent },
   

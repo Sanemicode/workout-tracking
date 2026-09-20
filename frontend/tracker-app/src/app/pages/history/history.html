@@ -1,10 +1,25 @@
 <div class="history-container">
   <h2>Історія тренувань</h2>
 
-  <div class="stats-row" *ngIf="workouts.length > 0">
+  <!-- НОВА ПАНЕЛЬ КЕРУВАННЯ (Фільтри та сортування) -->
+  <div class="controls-bar" *ngIf="allWorkouts.length > 0">
+    <div class="filter-group">
+      <label>Вид активності:</label>
+      <!-- Викликаємо applyFilters() при кожній зміні селектора -->
+      <select [(ngModel)]="filterType" (change)="applyFilters()">
+        <option *ngFor="let type of availableTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+    
+    <button class="sort-btn" (click)="toggleSort()">
+      Сортувати за датою: {{ sortOrder === 'desc' ? 'Новіші спочатку ⬇' : 'Старіші спочатку ⬆' }}
+    </button>
+  </div>
+
+  <div class="stats-row" *ngIf="filteredWorkouts.length > 0">
     <div class="stat-card">
       <h4>Всього тренувань</h4>
-      <p>{{ workouts.length }}</p>
+      <p>{{ filteredWorkouts.length }}</p>
     </div>
     <div class="stat-card">
       <h4>Загальний час</h4>
@@ -16,7 +31,7 @@
     </div>
   </div>
 
-  <table class="history-table" *ngIf="workouts.length > 0">
+  <table class="history-table" *ngIf="filteredWorkouts.length > 0">
     <thead>
       <tr>
         <th>Дата</th>
@@ -26,7 +41,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let w of workouts">
+      <tr *ngFor="let w of filteredWorkouts">
         <td>{{ w.date }}</td>
         <td>{{ w.workout_type }}</td>
         <td>{{ w.duration }}</td>
@@ -35,7 +50,12 @@
     </tbody>
   </table>
 
-  <div class="empty-state" *ngIf="workouts.length === 0">
+  <!-- Повідомлення, якщо фільтр нічого не знайшов -->
+  <div class="empty-state" *ngIf="allWorkouts.length > 0 && filteredWorkouts.length === 0">
+    За вашими критеріями тренувань не знайдено.
+  </div>
+  
+  <div class="empty-state" *ngIf="allWorkouts.length === 0">
     Історія порожня. Додайте своє перше тренування на Дашборді!
   </div>
 </div>

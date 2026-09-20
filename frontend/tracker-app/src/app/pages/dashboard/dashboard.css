@@ -132,3 +132,24 @@ header {
 .edit-btn:hover {
   color: #0b5ed7;
 }
+
+.charts-section {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.charts-section h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.chart-wrapper {
+  height: 300px;
+  position: relative;
+  margin: 0 auto;
+  max-width: 500px; /* Обмежуємо ширину, щоб діаграма була акуратною */
+}
