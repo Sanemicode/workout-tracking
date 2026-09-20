@@ -24,7 +24,7 @@ Charts: `ng2-charts` / Chart.js
 Routing & State: Angular Router, LocalStorage
 
 Backend:
-Framework: Python (FastAPI / Flask - *залежно від того, що використовуєш*)
+Framework: Python (FastAPI / Flask)
 Database: SQLite / PostgreSQL
 Security: PyJWT, Passlib (Password Hashing)
 
