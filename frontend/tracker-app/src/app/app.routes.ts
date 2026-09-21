@@ -23,7 +23,7 @@ export const routes: Routes = [
   // Відкритий маршрут
   { path: 'login', component: AuthComponent },
   
-  { path: 'u/:username', component: PublicProfileComponent }, // Динамічний маршрут для публічного профілю
+  { path: 'u/:username', component: PublicProfileComponent  }, // Динамічний маршрут для публічного профілю
 
   // Захищені маршрути (додано canActivate)
   { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
