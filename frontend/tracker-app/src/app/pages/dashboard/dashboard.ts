@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 // Імпорти для графіків
 import { BaseChartDirective } from 'ng2-charts';
@@ -25,6 +26,7 @@ export class Dashboard implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
+  private translate = inject(TranslateService);
 
   workouts: any[] = [];
   
@@ -124,6 +126,24 @@ export class Dashboard implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  enableNotifications() {
+    if ('Notification' in window) {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          new Notification('WorkoutTracker', {
+            // Використовуємо this.translate.instant для миттєвого перекладу
+            body: this.translate.instant('NOTIFICATIONS.SUCCESS_BODY'),
+            icon: '/icons/icon-72x72.png'
+          });
+        } else {
+          alert(this.translate.instant('NOTIFICATIONS.DENIED_ALERT'));
+        }
+      });
+    } else {
+      alert(this.translate.instant('NOTIFICATIONS.UNSUPPORTED_ALERT'));
+    }
   }
 
   // --- Функція перерахунку даних для графіка ---

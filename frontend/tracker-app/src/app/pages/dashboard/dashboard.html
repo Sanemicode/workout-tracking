@@ -1,6 +1,15 @@
 <div class="dashboard-container">
+  <div class="dashboard-container">
+  
+  <!-- НОВА КНОПКА ДЛЯ СПОВІЩЕНЬ -->
+  <div style="text-align: right; margin-bottom: 15px;">
+    <button class="add-btn" style="background-color: #0d6efd;" (click)="enableNotifications()">
+      {{ 'NOTIFICATIONS.BTN_ENABLE' | translate }}
+    </button>
+  </div>
+
   <section class="add-section">
-    <!-- Для умов ми перекладаємо кожну частину окремо -->
+...    <!-- Для умов ми перекладаємо кожну частину окремо -->
     <h3>{{ editingId ? ('DASHBOARD.EDIT_ACTIVITY' | translate) : ('DASHBOARD.ADD_ACTIVITY' | translate) }}</h3>
     
     <form (ngSubmit)="submitForm()">

@@ -32,7 +32,8 @@
   "TABLE_TIME": "Time (min)",
   "TABLE_DISTANCE": "Distance (km)",
   "EMPTY_FILTER": "No workouts found matching your criteria.",
-  "EMPTY_HISTORY": "History is empty. Add your first workout on the Dashboard!"
+  "EMPTY_HISTORY": "History is empty. Add your first workout on the Dashboard!",
+  "BTN_EXPORT": "Export Data (JSON)"
 },
 "PUBLIC_PROFILE": {
     "TITLE": "Athlete Page:",
@@ -62,5 +63,11 @@
     "BTN_REGISTER": "Create Account",
     "TOGGLE_TO_REGISTER": "Don't have an account? Sign up",
     "TOGGLE_TO_LOGIN": "Already have an account? Sign in"
+  },
+  "NOTIFICATIONS": {
+    "BTN_ENABLE": "🔔 Enable Reminders",
+    "SUCCESS_BODY": "Reminders enabled! Don't forget to warm up today 🏃‍♂️",
+    "DENIED_ALERT": "You have blocked notifications in your browser.",
+    "UNSUPPORTED_ALERT": "Your browser does not support Web Push notifications."
   }
 }

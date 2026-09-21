@@ -19,6 +19,13 @@
     </button>
   </form>
 
+  <!-- НОВА КНОПКА FACEBOOK -->
+  <div style="margin-top: 15px;">
+    <button type="button" (click)="loginWithFacebook()" style="background-color: #1877f2; color: white; width: 100%; border: none; padding: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 16px;">
+      Продовжити з Facebook
+    </button>
+  </div>
+
   <p (click)="toggleMode()" class="toggle-text">
     {{ isLoginMode ? ('AUTH.TOGGLE_TO_REGISTER' | translate) : ('AUTH.TOGGLE_TO_LOGIN' | translate) }}
   </p>

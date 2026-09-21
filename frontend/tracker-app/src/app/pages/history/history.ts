@@ -44,6 +44,23 @@ export class History implements OnInit {
     });
   }
 
+  exportData() {
+    // Перетворюємо масив тренувань у форматований JSON-рядок
+    const dataStr = JSON.stringify(this.allWorkouts, null, 2);
+    // Створюємо Blob (бінарний об'єкт) з цими даними
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    
+    // Створюємо тимчасове посилання і програмно натискаємо на нього
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `workout_history_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    
+    // Очищаємо пам'ять
+    window.URL.revokeObjectURL(url);
+  }
+  
   applyFilters() {
     // 1. Фільтруємо за видом активності
     if (this.filterType === 'Усі') {

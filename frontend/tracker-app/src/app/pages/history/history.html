@@ -1,16 +1,22 @@
 <div class="history-container">
   <h2>{{ 'HISTORY_PAGE.TITLE' | translate }}</h2>
 
-  <!-- НОВА ПАНЕЛЬ КЕРУВАННЯ (Фільтри та сортування) -->
+  <!-- ЄДИНА ПАНЕЛЬ КЕРУВАННЯ (Фільтри, Експорт, Сортування) -->
   <div class="controls-bar" *ngIf="allWorkouts.length > 0">
     <div class="filter-group">
       <label>{{ 'HISTORY_PAGE.FILTER_LABEL' | translate }}</label>
       <select [(ngModel)]="filterType" (change)="applyFilters()">
-        <!-- Самі види активностей залишаємо як є, вони беруться з бази/масиву -->
-        <option *ngFor="let type of availableTypes" [value]="type">{{ type }}</option>
+        <option *ngFor="let type of availableTypes" [value]="type">
+          {{ type === 'Усі' ? ('HISTORY_PAGE.FILTER_ALL' | translate) : type }}
+        </option>
       </select>
     </div>
     
+    <!-- КНОПКА ЕКСПОРТУ -->
+    <button class="sort-btn" style="background-color: #198754; color: white; border-color: #198754;" (click)="exportData()">
+      💾 {{ 'HISTORY_PAGE.BTN_EXPORT' | translate }}
+    </button>
+
     <button class="sort-btn" (click)="toggleSort()">
       {{ 'HISTORY_PAGE.SORT_PREFIX' | translate }} 
       {{ sortOrder === 'desc' ? ('HISTORY_PAGE.SORT_DESC' | translate) : ('HISTORY_PAGE.SORT_ASC' | translate) }}
