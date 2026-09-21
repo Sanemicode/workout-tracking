@@ -27,7 +27,10 @@ app = FastAPI(title="Workout Tracker API")
 # Налаштування CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=[
+        "http://localhost:4200"
+        "https://workout-tracking-eta.vercel.app"
+        ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

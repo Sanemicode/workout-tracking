@@ -1,21 +1,21 @@
 import { Injectable, Service } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class WorkoutService {
-  private apiUrl = 'http://localhost:8000/api/workouts';
+  private apiUrl = `${environment.apiUrl}/workouts`;
   constructor(private http: HttpClient) { }
 
   getWorkouts() {
     // Звертаємось до нашого Python бекенду
-    return this.http.get('http://127.0.0.1:8000/api/workouts'); 
+    return this.http.get(this.apiUrl); 
   }
 
 // Видалення даних
   deleteWorkout(id: number) {
-    return this.http.delete(`http://127.0.0.1:8000/api/workouts/${id}`);
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
 // НОВИЙ МЕТОД ДЛЯ РЕДАГУВАННЯ
@@ -24,7 +24,7 @@ export class WorkoutService {
   }
 
 addWorkout(workout: any) {
-    const url = `http://127.0.0.1:8000/api/workouts?workout_type=${workout.workout_type}&duration=${workout.duration}&distance=${workout.distance}`;
+    const url = `${this.apiUrl}?workout_type=${workout.workout_type}&duration=${workout.duration}&distance=${workout.distance}`;
     return this.http.post(url, {});
   }
 }

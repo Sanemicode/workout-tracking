@@ -2,12 +2,12 @@ import { Injectable, signal, inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = `${environment.apiUrl}/api`;
   
   // Отримуємо поточну платформу (браузер чи сервер)
   private platformId = inject(PLATFORM_ID);
