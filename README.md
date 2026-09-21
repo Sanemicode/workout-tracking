@@ -6,12 +6,12 @@ A full-stack web application designed to help users track, analyze, and share th
 
 Key Features
 
-Secure Authentication**: JWT-based authentication with secure password hashing on the backend.
-Interactive Dashboard**: Real-time workout logging, editing, and visual analytics using dynamic charts (`ng2-charts`).
-Advanced History & Filtering**: Comprehensive workout history with sorting by date and filtering by activity type.
-Public Profiles & Custom Links**: Each user gets a unique shareable profile link (e.g., `/u/username`) to showcase their public workout statistics.
-Internationalization (i18n)**: Full interface localization supporting **Ukrainian (UA)** and **English (EN)** via `@ngx-translate/core`.
-Responsive UI**: Clean, modern design optimized for both desktop and mobile devices.
+Secure Authentication: JWT-based authentication with secure password hashing on the backend.
+Interactive Dashboard: Real-time workout logging, editing, and visual analytics using dynamic charts (`ng2-charts`).
+Advanced History & Filtering: Comprehensive workout history with sorting by date and filtering by activity type.
+Public Profiles & Custom Links: Each user gets a unique shareable profile link (e.g., `/u/username`) to showcase their public workout statistics.
+Internationalization (i18n): Full interface localization supporting Ukrainian (UA) and English (EN) via `@ngx-translate/core`.
+Responsive UI: Clean, modern design optimized for both desktop and mobile devices.
 
 ---
 
