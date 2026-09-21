@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://workout-tracking-vfj5.onrender.com/api'
+  apiUrl: 'https://workout-tracking-vfj5.onrender.com'
 };
