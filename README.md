@@ -58,6 +58,9 @@ ng serve
 
 Open your browser and navigate to http://localhost:4200.
 
+and web version:
+https://workout-tracking-eta.vercel.app/
+
 
 ---
 
