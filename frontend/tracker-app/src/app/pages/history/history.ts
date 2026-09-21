@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-history',
@@ -30,7 +31,7 @@ export class History implements OnInit {
   }
 
   loadWorkouts() {
-    this.http.get<any[]>('http://localhost:8000/api/workouts').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/api/workouts`).subscribe({
       next: (data) => {
         this.allWorkouts = data;
         

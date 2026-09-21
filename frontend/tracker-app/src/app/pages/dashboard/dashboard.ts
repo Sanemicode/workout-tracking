@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../../environments/environment';
 
 // Імпорти для графіків
 import { BaseChartDirective } from 'ng2-charts';
@@ -59,7 +60,7 @@ export class Dashboard implements OnInit {
   }
 
   loadWorkouts() {
-    this.http.get<any>('http://localhost:8000/api/workouts').subscribe({
+    this.http.get<any>(`${environment.apiUrl}/api/workouts`).subscribe({
       next: (data) => {
         this.workouts = data; 
         this.updateCharts(); // Оновлюємо графік
@@ -73,7 +74,7 @@ export class Dashboard implements OnInit {
     if (!this.workoutType || !this.duration || !this.distance || !this.workoutDate) return;
 
     if (this.editingId) {
-      const url = `http://localhost:8000/api/workouts/${this.editingId}?workout_type=${this.workoutType}&duration=${this.duration}&distance=${this.distance}&workout_date=${this.workoutDate}`;
+      const url = `${environment.apiUrl}/api/workouts/${this.editingId}?workout_type=${this.workoutType}&duration=${this.duration}&distance=${this.distance}&workout_date=${this.workoutDate}`;
       
       this.http.put(url, {}).subscribe({
         next: (updatedWorkout) => {
@@ -87,7 +88,7 @@ export class Dashboard implements OnInit {
         }
       });
     } else {
-      const url = `http://localhost:8000/api/workouts?workout_type=${this.workoutType}&duration=${this.duration}&distance=${this.distance}&workout_date=${this.workoutDate}`;
+      const url = `${environment.apiUrl}/api/workouts?workout_type=${this.workoutType}&duration=${this.duration}&distance=${this.distance}&workout_date=${this.workoutDate}`;
       
       this.http.post(url, {}).subscribe({
         next: (newWorkout) => {
@@ -119,7 +120,7 @@ export class Dashboard implements OnInit {
   deleteWorkout(id: number) {
     if (!confirm('Точно видалити це тренування?')) return;
 
-    this.http.delete(`http://localhost:8000/api/workouts/${id}`).subscribe({
+    this.http.delete(`${environment.apiUrl}/api/workouts/${id}`).subscribe({
       next: () => {
         this.workouts = this.workouts.filter(w => w.id !== id);
         this.updateCharts(); // Оновлюємо графік

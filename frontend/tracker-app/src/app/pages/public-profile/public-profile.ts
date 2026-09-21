@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-public-profile',
@@ -33,7 +34,7 @@ export class PublicProfileComponent implements OnInit {
   }
 
   loadPublicData() {
-    this.http.get<any>(`http://localhost:8000/api/public/users/${this.username}/workouts`)
+    this.http.get<any>(`${environment.apiUrl}/api/public/users/${this.username}/workouts`)
       .subscribe({
         next: (data) => {
           this.workouts = data.workouts || [];
