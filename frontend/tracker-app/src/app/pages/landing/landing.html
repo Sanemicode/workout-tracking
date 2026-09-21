@@ -1,28 +1,32 @@
 <div class="landing-container">
   <section class="hero">
-    <h1>Твій персональний WorkoutTracker 🏃‍♂️</h1>
-    <p>Відстежуй свої тренування, аналізуй статистику та досягай нових вершин. Жодних складних таблиць — лише твій прогрес.</p>
+    <h1>{{ 'LANDING.TITLE' | translate }}</h1>
+    <p>{{ 'LANDING.SUBTITLE' | translate }}</p>
     <div class="cta-buttons">
       <!-- Показуємо, якщо НЕ залогінений -->
-      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="btn primary">Почати тренування</a>
+      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="btn primary">
+        {{ 'LANDING.BTN_START' | translate }}
+      </a>
       
       <!-- Показуємо, якщо залогінений -->
-      <a *ngIf="authService.isLoggedIn()" routerLink="/dashboard" class="btn primary">Перейти до Дашборду</a>
+      <a *ngIf="authService.isLoggedIn()" routerLink="/dashboard" class="btn primary">
+        {{ 'LANDING.BTN_DASHBOARD' | translate }}
+      </a>
     </div>
   </section>
 
   <section class="features">
     <div class="feature-card">
-      <h3>📊 Детальний Дашборд</h3>
-      <p>Отримуй зведену статистику своїх досягнень.</p>
+      <h3>{{ 'LANDING.CARD1_TITLE' | translate }}</h3>
+      <p>{{ 'LANDING.CARD1_DESC' | translate }}</p>
     </div>
     <div class="feature-card">
-      <h3>📅 Історія в розрізах</h3>
-      <p>Переглядай активність по датах та видах спорту.</p>
+      <h3>{{ 'LANDING.CARD2_TITLE' | translate }}</h3>
+      <p>{{ 'LANDING.CARD2_DESC' | translate }}</p>
     </div>
     <div class="feature-card">
-      <h3>🔒 Безпека даних</h3>
-      <p>Твої результати надійно захищені та приватні.</p>
+      <h3>{{ 'LANDING.CARD3_TITLE' | translate }}</h3>
+      <p>{{ 'LANDING.CARD3_DESC' | translate }}</p>
     </div>
   </section>
 </div>

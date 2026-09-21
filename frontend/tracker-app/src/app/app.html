@@ -1,21 +1,32 @@
-<!-- Додано *ngIf -->
 <nav class="navbar" *ngIf="!isAuthPage">
-  <div class="logo">
+  <!-- Додав routerLink="/", щоб по кліку на логотип кидало на головну (лендінг) -->
+  <div class="logo" routerLink="/" style="cursor: pointer;">
     🏃‍♂️ <span>WorkoutTracker</span>
   </div>
   
   <div class="nav-links">
-    <a routerLink="/dashboard">{{ 'NAV.DASHBOARD' | translate }}</a>
-    <a routerLink="/history">{{ 'NAV.HISTORY' | translate }}</a>
+    <!-- ТІЛЬКИ ДЛЯ АВТОРИЗОВАНИХ -->
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <a routerLink="/dashboard">{{ 'NAV.DASHBOARD' | translate }}</a>
+      <a routerLink="/history">{{ 'NAV.HISTORY' | translate }}</a>
+      <a *ngIf="currentUsername" [routerLink]="['/u', currentUsername]">{{ 'NAV.MY_PROFILE' | translate }}</a>
+    </ng-container>
     
-    <a *ngIf="currentUsername" [routerLink]="['/u', currentUsername]">{{ 'NAV.MY_PROFILE' | translate }}</a>
-    
+    <!-- ЗАВЖДИ ВИДИМІ -->
     <div class="lang-switcher">
       <button (click)="switchLanguage('ua')">UA</button>
       <button (click)="switchLanguage('en')">EN</button>
     </div>
 
-    <button class="logout-btn" (click)="logout()">{{ 'NAV.LOGOUT' | translate }}</button>
+    <!-- КНОПКА ВИХОДУ (тільки для авторизованих) -->
+    <button *ngIf="authService.isLoggedIn()" class="logout-btn" (click)="logout()">
+      {{ 'NAV.LOGOUT' | translate }}
+    </button>
+
+    <!-- КНОПКА ВХОДУ (тільки для гостей) -->
+    <button *ngIf="!authService.isLoggedIn()" class="logout-btn" style="background-color: #28a745; border-color: #28a745;" routerLink="/login">
+      {{ 'NAV.LOGIN' | translate }}
+    </button>
   </div>
 </nav>
 

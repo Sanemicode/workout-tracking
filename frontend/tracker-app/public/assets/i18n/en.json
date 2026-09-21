@@ -3,7 +3,8 @@
     "MY_PROFILE": "My Profile",
     "DASHBOARD": "Dashboard",
     "HISTORY": "History",
-    "LOGOUT": "Logout"
+    "LOGOUT": "Logout",
+    "LOGIN": "Login"
   },
   "DASHBOARD": {
     "EDIT_ACTIVITY": "Edit Activity",
@@ -69,5 +70,17 @@
     "SUCCESS_BODY": "Reminders enabled! Don't forget to warm up today 🏃‍♂️",
     "DENIED_ALERT": "You have blocked notifications in your browser.",
     "UNSUPPORTED_ALERT": "Your browser does not support Web Push notifications."
+  },
+  "LANDING": {
+    "TITLE": "Your personal WorkoutTracker 🏃‍♂️",
+    "SUBTITLE": "Track your workouts, analyze stats, and reach new heights. No complex spreadsheets — just your progress.",
+    "BTN_START": "Start Training",
+    "CARD1_TITLE": "📊 Detailed Dashboard",
+    "CARD1_DESC": "Get summary statistics of your achievements.",
+    "CARD2_TITLE": "📅 Sectioned History",
+    "CARD2_DESC": "View activity by dates and sport types.",
+    "CARD3_TITLE": "🔒 Data Security",
+    "CARD3_DESC": "Your results are securely protected and private.",
+    "BTN_DASHBOARD": "Go to Dashboard"
   }
 }
