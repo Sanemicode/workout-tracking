@@ -34,7 +34,9 @@
   "TABLE_DISTANCE": "Distance (km)",
   "EMPTY_FILTER": "No workouts found matching your criteria.",
   "EMPTY_HISTORY": "History is empty. Add your first workout on the Dashboard!",
-  "BTN_EXPORT": "Export Data (JSON)"
+  "BTN_EXPORT": "Export Data (JSON)",
+  "FILTER_ALL": "All activities",
+  "OTHER_KEYS": "..."
 },
 "PUBLIC_PROFILE": {
     "TITLE": "Athlete Page:",
@@ -82,5 +84,12 @@
     "CARD3_TITLE": "🔒 Data Security",
     "CARD3_DESC": "Your results are securely protected and private.",
     "BTN_DASHBOARD": "Go to Dashboard"
+  },
+  "ACTIVITY": {
+    "Біг": "Running",
+    "Ниряння": "Diving",
+    "Велосипед": "Cycling",
+    "Плавання": "Swimming",
+    "Йога": "Yoga"
   }
 }

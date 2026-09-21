@@ -7,7 +7,8 @@
       <label>{{ 'HISTORY_PAGE.FILTER_LABEL' | translate }}</label>
       <select [(ngModel)]="filterType" (change)="applyFilters()">
         <option *ngFor="let type of availableTypes" [value]="type">
-          {{ type === 'Усі' ? ('HISTORY_PAGE.FILTER_ALL' | translate) : type }}
+          <!-- Якщо тип 'Усі', беремо переклад для всіх. Інакше — шукаємо переклад конкретної активності -->
+          {{ type === 'Усі' ? ('HISTORY_PAGE.FILTER_ALL' | translate) : ('ACTIVITY.' + type | translate) }}
         </option>
       </select>
     </div>
@@ -50,7 +51,8 @@
     <tbody>
       <tr *ngFor="let w of filteredWorkouts">
         <td>{{ w.date }}</td>
-        <td>{{ w.workout_type }}</td>
+        <!-- Переклад для колонки "Вид активності" -->
+        <td>{{ 'ACTIVITY.' + w.workout_type | translate }}</td>
         <td>{{ w.duration }}</td>
         <td>{{ w.distance }}</td>
       </tr>
