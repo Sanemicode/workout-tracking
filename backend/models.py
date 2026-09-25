@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -19,7 +19,7 @@ class Workout(Base):
     workout_type = Column(String, index=True)
     duration = Column(Integer)
     distance = Column(Float)
-    date = Column(String) 
+    date = Column(Date)
     owner_id = Column(Integer, ForeignKey("users.id"))
     
     owner = relationship("User", back_populates="workouts")

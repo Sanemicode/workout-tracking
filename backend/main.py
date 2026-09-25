@@ -8,6 +8,8 @@ from database import engine, SessionLocal
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import JWTError
 from datetime import date
+from dotenv import load_dotenv
+import os
 import models
 import schemas
 
@@ -16,11 +18,14 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login")
 
+load_dotenv()
+
+
+
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-# Ця команда фізично створює таблиці в PostgreSQL/SQLite на основі models.py
-models.Base.metadata.create_all(bind=engine)
+# models.Base.metadata.create_all(bind=engine) #
 
 app = FastAPI(title="Workout Tracker API")
 
@@ -64,9 +69,9 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     return user
 
 # Налаштування для JWT-токенів
-SECRET_KEY = "super_secret_key_for_workout_app" 
+SECRET_KEY = os.getenv("SECRET_KEY", "fallback_secret_if_env_fails") 
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 def create_access_token(data: dict):
     to_encode = data.copy()
@@ -110,12 +115,16 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 # --- ПРИВАТНІ ЕНДПОІНТИ ТРЕНУВАНЬ ---
 
 @app.post("/api/workouts")
-def create_workout(workout_type: str, duration: int, distance: float, workout_date: str = None, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
-    final_date = workout_date if workout_date else date.today().isoformat()
+def create_workout(
+    workout: schemas.WorkoutCreate, 
+    db: Session = Depends(get_db), 
+    current_user: models.User = Depends(get_current_user)
+):
+    final_date = workout.workout_date if workout.workout_date else date.today().isoformat()
     new_workout = models.Workout(
-        workout_type=workout_type, 
-        duration=duration, 
-        distance=distance,
+        workout_type=workout.workout_type, 
+        duration=workout.duration, 
+        distance=workout.distance,
         date=final_date,
         owner_id=current_user.id  
     )
@@ -123,6 +132,32 @@ def create_workout(workout_type: str, duration: int, distance: float, workout_da
     db.commit()
     db.refresh(new_workout)
     return new_workout
+
+@app.put("/api/workouts/{workout_id}")
+def update_workout(
+    workout_id: int, 
+    workout: schemas.WorkoutCreate, 
+    db: Session = Depends(get_db), 
+    current_user: models.User = Depends(get_current_user)
+):
+    db_workout = db.query(models.Workout).filter(
+        models.Workout.id == workout_id, 
+        models.Workout.owner_id == current_user.id
+    ).first()
+    
+    if not db_workout:
+        raise HTTPException(status_code=404, detail="Тренування не знайдено або немає доступу")
+    
+   
+    db_workout.workout_type = workout.workout_type
+    db_workout.duration = workout.duration
+    db_workout.distance = workout.distance
+    if workout.workout_date:
+        db_workout.date = workout.workout_date
+        
+    db.commit()
+    db.refresh(db_workout)
+    return db_workout
 
 @app.get("/api/workouts")
 def get_workouts(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
@@ -146,13 +181,23 @@ def update_workout(workout_id: int, workout_type: str, duration: int, distance: 
     return workout
 
 @app.delete("/api/workouts/{workout_id}")
-def delete_workout(workout_id: int, db: Session = Depends(get_db)):
+def delete_workout(
+    workout_id: int, 
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user) 
+):
     workout = db.query(models.Workout).filter(models.Workout.id == workout_id).first()
-    if workout:
-        db.delete(workout)
-        db.commit()
-        return {"message": "Тренування видалено"}
-    return {"error": "Не знайдено"}
+    
+    if not workout:
+        raise HTTPException(status_code=404, detail="Тренування не знайдено")
+        
+
+    if workout.owner_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Ви не можете видалити чуже тренування")
+        
+    db.delete(workout)
+    db.commit()
+    return {"message": "Тренування видалено"}
 
 # --- ПУБЛІЧНІ ЕНДПОІНТИ (Для Шерінгу) ---
 

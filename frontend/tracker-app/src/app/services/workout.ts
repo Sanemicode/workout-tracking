@@ -20,12 +20,12 @@ export class WorkoutService {
 
 // НОВИЙ МЕТОД ДЛЯ РЕДАГУВАННЯ
   updateWorkout(id: number, workout: any) {
-    return this.http.put(`${this.apiUrl}/${id}?workout_type=${workout.workout_type}&duration=${workout.duration}&distance=${workout.distance}`, {});
+    return this.http.put(`${this.apiUrl}/workouts/${id}`, workout);
   }
 
 addWorkout(workout: any) {
     const url = `${this.apiUrl}?workout_type=${workout.workout_type}&duration=${workout.duration}&distance=${workout.distance}`;
-    return this.http.post(url, {});
+    return this.http.post(`${this.apiUrl}/workouts`, workout);
   }
 }
 

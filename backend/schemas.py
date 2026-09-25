@@ -1,4 +1,11 @@
 from pydantic import BaseModel
+from typing import Optional
+
+class WorkoutCreate(BaseModel):
+    workout_type: str
+    duration: int
+    distance: float
+    workout_date: Optional[str] = None
 
 class UserCreate(BaseModel):
     email: str
